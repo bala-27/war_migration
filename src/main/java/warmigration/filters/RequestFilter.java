@@ -1,28 +1,21 @@
 package warmigration.filters;
 
-import org.glassfish.jersey.message.internal.ReaderWriter;
 import org.springframework.stereotype.Component;
+import warmigration.repositories.SimpleRepository;
+import warmigration.repositories.UserRepository;
 
 import javax.annotation.Priority;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Priorities;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 
 @Component
@@ -31,22 +24,25 @@ import java.util.UUID;
 @Priority(Priorities.AUTHORIZATION)
 public class RequestFilter implements ContainerRequestFilter {
     public static final String METHOD_TYPE_OPTIONS = "OPTIONS";
+    private UserRepository userRepository;
+
+    public RequestFilter(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        ignoreAuthPaths.add("external/noauth");
+    }
 
     private static final List<String> ignoreAuthPaths = new ArrayList<>();
     @Context
     private HttpServletRequest servletRequest;
 
-    public RequestFilter() {
-        ignoreAuthPaths.add("external/noauth");
-    }
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String userId = requestContext.getHeaderString("X_USER_ID");
-        if(shouldIgnoreAuth(requestContext)) {
+        if (shouldIgnoreAuth(requestContext)) {
             return;
         }
-        if (userId == null) {
+        if (userId == null || !userRepository.isValidUserId(userId)) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("Not authorized!").build());
         }
     }

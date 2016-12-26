@@ -1,4 +1,4 @@
-package warmigration;
+package warmigration.repositories;
 
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Component;

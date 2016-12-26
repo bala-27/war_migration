@@ -2,7 +2,7 @@ package warmigration.internal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import warmigration.SimpleRepository;
+import warmigration.repositories.SimpleRepository;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
