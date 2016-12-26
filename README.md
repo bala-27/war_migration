@@ -3,6 +3,10 @@ War migration
 
 This is a simple example of migrating a war based webapp to spring-boot
 
+This demonstrates
+
+ * Setting up a jersey resource config with filters and resources.
+ * Dependency injection using simple repository objects.
 
 Building and running
 --------------------
