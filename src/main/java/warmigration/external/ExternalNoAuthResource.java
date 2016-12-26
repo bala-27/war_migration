@@ -1,18 +1,32 @@
 package warmigration.external;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import warmigration.SimpleRepository;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/noauth")
+@Component
+@Path("/external/noauth")
 public class ExternalNoAuthResource {
+
+
+    private SimpleRepository simpleRepository;
+
+    @Autowired
+    public ExternalNoAuthResource(SimpleRepository simpleRepository) {
+
+        this.simpleRepository = simpleRepository;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response simpleRequest() {
-        System.out.println("bah");
-        return Response.ok("Looks good without auth").build();
+        return Response.ok(simpleRepository.someData()).build();
     }
 
 }

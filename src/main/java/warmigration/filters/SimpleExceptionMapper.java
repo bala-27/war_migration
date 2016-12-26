@@ -1,8 +1,11 @@
 package warmigration.filters;
 
+import org.springframework.stereotype.Component;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
+@Component
 public class SimpleExceptionMapper implements ExceptionMapper<IllegalStateException> {
 
 

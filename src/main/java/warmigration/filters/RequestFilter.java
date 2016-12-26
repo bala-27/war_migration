@@ -1,6 +1,7 @@
 package warmigration.filters;
 
 import org.glassfish.jersey.message.internal.ReaderWriter;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Priority;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
+@Component
 @PreMatching
 @Provider
 @Priority(Priorities.AUTHORIZATION)
@@ -34,7 +37,7 @@ public class RequestFilter implements ContainerRequestFilter {
     private HttpServletRequest servletRequest;
 
     public RequestFilter() {
-        ignoreAuthPaths.add("noauth");
+        ignoreAuthPaths.add("external/noauth");
     }
 
     @Override

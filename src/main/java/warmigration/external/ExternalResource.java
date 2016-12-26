@@ -1,16 +1,26 @@
 package warmigration.external;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import warmigration.SimpleRepository;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by sidharth on 25/12/16.
- */
-@Path("/resource")
+@Component
+@Path("/external/resource")
 public class ExternalResource {
+
+    private SimpleRepository simpleRepository;
+
+    @Autowired
+    public ExternalResource(SimpleRepository simpleRepository) {
+
+        this.simpleRepository = simpleRepository;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
