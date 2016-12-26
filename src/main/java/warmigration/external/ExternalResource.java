@@ -15,7 +15,6 @@ public class ExternalResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response simpleRequest() {
-        System.out.println("bah");
         return Response.ok("Looks good").build();
     }
 
